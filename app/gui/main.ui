@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>main</class>
+ <widget class="QMainWindow" name="main">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>800</width>
+    <height>600</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Banco Santa Fe - Transferencias</string>
+  </property>
+  <widget class="QWidget" name="centralwidget"/>
+  <widget class="QMenuBar" name="menubar">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>0</y>
+     <width>800</width>
+     <height>22</height>
+    </rect>
+   </property>
+   <widget class="QMenu" name="menuArchivo">
+    <property name="title">
+     <string>Archivo</string>
+    </property>
+    <addaction name="btnRegistrar_transferencia"/>
+    <addaction name="btnReportar_transferencia"/>
+    <addaction name="btnHistorial_de_transferencias"/>
+   </widget>
+   <widget class="QMenu" name="menuCr_ditos">
+    <property name="title">
+     <string>Créditos</string>
+    </property>
+    <addaction name="actionDesarrolladores"/>
+   </widget>
+   <addaction name="menuArchivo"/>
+   <addaction name="menuCr_ditos"/>
+  </widget>
+  <widget class="QStatusBar" name="statusbar"/>
+  <action name="actionDesarrolladores">
+   <property name="text">
+    <string>Desarrolladores</string>
+   </property>
+  </action>
+  <action name="btnRegistrar_transferencia">
+   <property name="text">
+    <string>Registrar transferencia</string>
+   </property>
+  </action>
+  <action name="btnReportar_transferencia">
+   <property name="text">
+    <string>Reportar transferencia</string>
+   </property>
+  </action>
+  <action name="btnHistorial_de_transferencias">
+   <property name="text">
+    <string>Historial de transferencias</string>
+   </property>
+  </action>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>
