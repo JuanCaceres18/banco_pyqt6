@@ -50,6 +50,9 @@
    <property name="text">
     <string>Registrar transferencia</string>
    </property>
+   <property name="shortcut">
+    <string>Ctrl+R</string>
+   </property>
   </action>
   <action name="btnReportar_transferencia">
    <property name="text">

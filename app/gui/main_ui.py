@@ -52,5 +52,6 @@ class Ui_main(object):
         self.menuCr_ditos.setTitle(_translate("main", "Créditos"))
         self.actionDesarrolladores.setText(_translate("main", "Desarrolladores"))
         self.btnRegistrar_transferencia.setText(_translate("main", "Registrar transferencia"))
+        self.btnRegistrar_transferencia.setShortcut(_translate("main", "Ctrl+R"))
         self.btnReportar_transferencia.setText(_translate("main", "Reportar transferencia"))
         self.btnHistorial_de_transferencias.setText(_translate("main", "Historial de transferencias"))
