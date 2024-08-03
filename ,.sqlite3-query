@@ -1,0 +1,7 @@
+-- database: ./banco.db
+
+-- Use the ▷ button in the top right corner to run the entire file.
+
+CREATE TABLE IF NOT EXISTS ciudades
+(id INTEGER PRIMARY KEY AUTOINCREMENT,
+nombre TEXT UNIQUE)
