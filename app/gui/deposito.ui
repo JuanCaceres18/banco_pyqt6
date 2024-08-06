@@ -32,7 +32,7 @@
     <string/>
    </property>
    <property name="pixmap">
-    <pixmap>../../../../../Downloads/logo_banco.png</pixmap>
+    <pixmap>../../../../../../../Downloads/logo_banco.png</pixmap>
    </property>
    <property name="scaledContents">
     <bool>true</bool>
@@ -452,7 +452,7 @@ border-radius: 10px;</string>
     </property>
    </item>
   </widget>
-  <widget class="QDateEdit" name="dateEdit">
+  <widget class="QDateEdit" name="date">
    <property name="geometry">
     <rect>
      <x>170</x>

@@ -1,5 +1,5 @@
 import conexion as con
-from model.movimientos import Transferencia
+from model.movimientos import DepositoInternacional
 from datetime import datetime 
 
 class DepositoData():
@@ -37,14 +37,14 @@ class DepositoData():
             print("Tabla deposito OK: ", ex)
 
 
-    def registrar(self, info:Transferencia): # Voy a recibir un usuario de tipo Usuario
+    def registrar_deposito(self, info:DepositoInternacional): # Voy a recibir un usuario de tipo Usuario
         fecha = datetime.now().strftime("%d/%m/%Y %H:%M:%S")
         # Devuelvo referencia a la base de datos
         self.db = con.Conexion().conectar()
         self.cursor = self.db.cursor()
         self.cursor.execute("""
-            INSERT INTO transferencias VALUES(null, '{}','{}','{}','{}','{}','{}','{}','{}')
-        """.format(info._monto, info._tipo, info._documento, info._internacional, info._dolares,fecha, False, info._motivo))
+            INSERT INTO deposito VALUES(null, '{}','{}','{}','{}','{}','{}','{}','{}', '{}','{}','{}','{}','{}','{}','{}')
+        """.format(info._monto, info._tipo, info._documento, info._internacional, info._dolares,fecha, info._fechaNacimiento, info._motivo, info._nombre1, info._nombre2, info._apellido1, info._apellido2, info._sexo, info._lugarNacimiento, info._terminos))
         self.db.commit()
         # Si las filas afectadas dan como resultado 1, entonces sí se produjo el insert.
         if self.cursor.rowcount == 1:

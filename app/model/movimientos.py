@@ -13,8 +13,8 @@ class DepositoInternacional():
         self._documento = documento
         self._motivo = motivo
         self._monto = monto
-        self._dolares = dolares
-        self._internacional = internacional
+        self._dolares = True
+        self._internacional = True
         self._nombre1 = nombre1
         self._nombre2 = nombre2
         self._apellido1 = apellido1

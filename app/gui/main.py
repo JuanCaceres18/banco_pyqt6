@@ -3,6 +3,8 @@ from PyQt6.QtWidgets import QMessageBox
 from data.ciudad import CiudadData
 from data.transferencia import TransferenciaData
 from model.movimientos import Transferencia
+from model.movimientos import DepositoInternacional
+from data.deposito import DepositoData
 
 class MainWindow():
     def __init__(self):
@@ -26,7 +28,7 @@ class MainWindow():
         self.registro.show()
     
     def abrirDeposito(self):
-        self.deposito.btnRegistrar.clicked.connect(self.registrarTransferencia)
+        self.deposito.btnRegistrar.clicked.connect(self.registrarDeposito)
         self.deposito.show()
         self.llenarComboCiudades()
 
@@ -102,3 +104,29 @@ class MainWindow():
             message = QMessageBox()
             message.setText("Debe seleccionar el tipo de documento")
             message.exec()
+        else:
+            fechaN = self.deposito.date.date().toPyDate()
+            deposito = DepositoInternacional(
+                tipo= self.deposito.cbTipo.currentText(),
+                documento= self.deposito.txtDocumento.text(),
+                monto= float(self.deposito.txtMonto.text()),
+                motivo= self.deposito.cbMotivo.currentText(),
+                nombre1= self.deposito.txtPrimerNombre.text(),
+                nombre2= self.deposito.txtSegundoNombre.text(),
+                apellido1= self.deposito.txtPrimerApellido.text(),
+                apellido2= self.deposito.txtSegundoApellido.text(),
+                sexo = self.deposito.cbSexo.currentText(),
+                lugarNacimiento= self.deposito.cbLugar.currentText(),
+                terminos = self.deposito.checkTerminos.isChecked(),
+                fechaNacimiento= fechaN
+            )
+            # print("trans: ", self.registro.checkTransferencia.isChecked())
+            # print("dollar: ", self.registro.checkDolares.isChecked())
+            objData = DepositoData()
+            mBox = QMessageBox()
+            if objData.registrar(info=deposito):
+                mBox.setText("Depósito registrado!")
+                # self.limpiarCamposTransferencia()
+            else:
+                mBox.setText("Depósito no registrado!")    
+            mBox.exec()
