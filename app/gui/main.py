@@ -1,5 +1,6 @@
 from PyQt6 import uic # Convertir la gui en código PYTHON
 from PyQt6.QtWidgets import QMessageBox
+from PyQt6.QtCore import QDate
 from data.ciudad import CiudadData
 from data.transferencia import TransferenciaData
 from model.movimientos import Transferencia
@@ -18,10 +19,13 @@ class MainWindow():
     def initGUI(self):
         self.main.btnRegistrar_transferencia.triggered.connect(self.abrirRegistro)
         self.main.btnReportar_transferencia.triggered.connect(self.abrirDeposito)
+        self.main.btnHistorial_de_transferencias.triggered.connect(self.abrirHistorial)
         # Cargar interfaz gráfica
         self.registro = uic.loadUi("./app/gui/registro.ui")
          # Cargar interfaz gráfica
         self.deposito = uic.loadUi("./app/gui/deposito.ui")
+        self.historial = uic.loadUi("./app/gui/historial.ui")
+
 
     def abrirRegistro(self):
         self.registro.btnRegistrar.clicked.connect(self.registrarTransferencia)
@@ -31,6 +35,12 @@ class MainWindow():
         self.deposito.btnRegistrar.clicked.connect(self.registrarDeposito)
         self.deposito.show()
         self.llenarComboCiudades()
+
+    def abrirHistorial(self):
+        self.historial.btnBuscar.clicked.connect(self.buscar)
+        self.historial.show()
+        # self.llenarTablaHistorial()
+
 
 
 ################### Transferencias ##################################
@@ -94,16 +104,43 @@ class MainWindow():
             self.deposito.cbLugar.addItem(item[1])
     
     def validarCamposDeposito(self)->bool:
-        if (not self.deposito.cbTipo.currentText() == "--Selecciona una opción--" or not self.deposito.txtDocumento.text() or not self.deposito.txtMonto.text() or not self.deposito.txtPrimerNombre.text() or not self.deposito.txtPrimerApellido.text() or not self.deposito.cbSexo.currentText() == "--Selecciona una opción--" or not self.deposito.cbLugar.currentText() == "--Selecciona una opción--"):
+        if (self.deposito.cbTipo.currentText() == "--Selecciona una opción--" or not self.deposito.txtDocumento.text() or not self.deposito.txtMonto.text() or not self.deposito.txtPrimerNombre.text() or not self.deposito.txtPrimerApellido.text() or self.deposito.cbSexo.currentText() == "--Selecciona una opción--" or self.deposito.cbLugar.currentText() == "--Selecciona una opción--"):
             return False
         else:
             return True
     
+    def limpiarCamposDeposito(self):
+        self.deposito.cbTipo.setCurrentIndex(0)
+        self.deposito.cbMotivo.setCurrentIndex(0)
+        self.deposito.txtDocumento.setText("")
+        self.deposito.txtMonto.setText("0")
+        self.deposito.txtPrimerNombre.setText("")
+        self.deposito.txtSegundoNombre.setText("")
+        self.deposito.txtPrimerApellido.setText("")
+        self.deposito.txtSegundoApellido.setText("")
+        self.deposito.cbSexo.setCurrentIndex(0)
+        self.deposito.cbLugar.setCurrentIndex(0)
+        self.deposito.checkTerminos.setChecked(False)
+        miFecha = QDate(2000,1,1)
+        self.deposito.date.setDate(miFecha)
+        self.registro.txtDocumento.setFocus()
+    
     def registrarDeposito(self):
-        if self.validarCamposDeposito():
-            message = QMessageBox()
-            message.setText("Debe seleccionar el tipo de documento")
+        message = QMessageBox()
+        if not self.validarCamposDeposito():
+            message.setText("Debe llenar los campos obligatorios (*)")
             message.exec()
+        elif self.deposito.checkTerminos.isChecked() == False:
+            message.setText("Debe aceptar los términos")
+            message.exec()
+            self.deposito.checkTerminos.setFocus()
+        # Si el monto no es numérico o si es menor a 1
+        elif not self.deposito.txtMonto.text().isnumeric() or float(self.deposito.txtMonto.text()) < 1:
+            message.setText("El monto debe ser mayor a 0")
+            self.deposito.txtMonto.setText("0")
+            message.exec()
+            self.deposito.txtMonto.setFocus()
+
         else:
             fechaN = self.deposito.date.date().toPyDate()
             deposito = DepositoInternacional(
@@ -124,9 +161,17 @@ class MainWindow():
             # print("dollar: ", self.registro.checkDolares.isChecked())
             objData = DepositoData()
             mBox = QMessageBox()
-            if objData.registrar(info=deposito):
+            if objData.registrar_deposito(info=deposito):
                 mBox.setText("Depósito registrado!")
-                # self.limpiarCamposTransferencia()
+                mBox.exec()
+                self.limpiarCamposDeposito()
             else:
                 mBox.setText("Depósito no registrado!")    
-            mBox.exec()
+                mBox.exec()
+
+################### Historial ############################
+    def buscar(self):
+        pass
+
+    def llenarTablaHistorial(self):
+        pass

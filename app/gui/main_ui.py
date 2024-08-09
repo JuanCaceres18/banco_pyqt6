@@ -54,4 +54,6 @@ class Ui_main(object):
         self.btnRegistrar_transferencia.setText(_translate("main", "Registrar transferencia"))
         self.btnRegistrar_transferencia.setShortcut(_translate("main", "Ctrl+R"))
         self.btnReportar_transferencia.setText(_translate("main", "Reportar transferencia"))
+        self.btnReportar_transferencia.setShortcut(_translate("main", "Ctrl+T"))
         self.btnHistorial_de_transferencias.setText(_translate("main", "Historial de transferencias"))
+        self.btnHistorial_de_transferencias.setShortcut(_translate("main", "Ctrl+J"))

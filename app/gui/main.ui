@@ -58,10 +58,16 @@
    <property name="text">
     <string>Reportar transferencia</string>
    </property>
+   <property name="shortcut">
+    <string>Ctrl+T</string>
+   </property>
   </action>
   <action name="btnHistorial_de_transferencias">
    <property name="text">
     <string>Historial de transferencias</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+J</string>
    </property>
   </action>
  </widget>
