@@ -30,7 +30,7 @@ class TransferenciaData():
 
 
     def registrar(self, info:Transferencia): # Voy a recibir un usuario de tipo Usuario
-        fecha = datetime.now().strftime("%d/%m/%Y %H:%M:%S")
+        fecha = datetime.now().strftime("%Y/%m/%d %H:%M:%S")
         # Devuelvo referencia a la base de datos
         self.db = con.Conexion().conectar()
         self.cursor = self.db.cursor()

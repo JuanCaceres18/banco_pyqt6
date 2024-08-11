@@ -1,7 +1,8 @@
 from PyQt6 import uic # Convertir la gui en código PYTHON
-from PyQt6.QtWidgets import QMessageBox
+from PyQt6.QtWidgets import QMessageBox, QTableWidgetItem
 from PyQt6.QtCore import QDate
 from data.ciudad import CiudadData
+from data.historial import HistorialData
 from data.transferencia import TransferenciaData
 from model.movimientos import Transferencia
 from model.movimientos import DepositoInternacional
@@ -38,8 +39,10 @@ class MainWindow():
 
     def abrirHistorial(self):
         self.historial.btnBuscar.clicked.connect(self.buscar)
+        self.historial.tblHistorial.setColumnWidth(1, 250)
+        self.historial.tblHistorial.setColumnWidth(3, 250)
         self.historial.show()
-        # self.llenarTablaHistorial()
+        self.llenarTablaHistorial()
 
 
 
@@ -171,7 +174,39 @@ class MainWindow():
 
 ################### Historial ############################
     def buscar(self):
-        pass
+        his = HistorialData()
+        data = his.buscarPorFecha(self.historial.txtDesde.date().toPyDate(), self.historial.txtHasta.date().toPyDate(), self.historial.cbTipo.currentText(), self.historial.txtDocumento.text())
+        print(data)
+        fila = 0
+        nombre = None
+        # Mostrar las filas
+        self.historial.tblHistorial.setRowCount(len(data))
+        for item in data:
+            # Coloco el id
+            self.historial.tblHistorial.setItem(fila, 0, QTableWidgetItem(str(item[0])))
+            if nombre:
+                self.historial.tblHistorial.setItem(fila, 1, QTableWidgetItem("{} {} {} {}".format(nombre)))
+            else:
+                self.historial.tblHistorial.setItem(fila, 1, QTableWidgetItem("{} {} {} {}".format(str(item[10]), str(item[11]), str(item[12]), str(item[13]))))
+                nombre = "{} {} {} {}".format(str(item[10]), str(item[11]), str(item[12]), str(item[13]))
+
+            if str(item[6]) == 'True':
+                self.historial.tblHistorial.setItem(fila, 2, QTableWidgetItem(str("USD " + item[2])))
+            else:
+                self.historial.tblHistorial.setItem(fila, 2, QTableWidgetItem(str("ARS " + item[2])))
+
+            if str(item[5]) == 'True':
+                self.historial.tblHistorial.setItem(fila, 3, QTableWidgetItem(str("Transferencia internacional " + item[2])))
+            else:
+                self.historial.tblHistorial.setItem(fila, 3, QTableWidgetItem(str("Transferencia Nacional " + item[2])))
+            self.historial.tblHistorial.setItem(fila, 4, QTableWidgetItem(str(item[7])))
+            if str(item[17]) == 'True':
+                self.historial.tblHistorial.setItem(fila, 5, QTableWidgetItem("SI"))
+            else: 
+                self.historial.tblHistorial.setItem(fila, 5, QTableWidgetItem("NO"))
+
+            fila = fila+1
+
 
     def llenarTablaHistorial(self):
         pass
