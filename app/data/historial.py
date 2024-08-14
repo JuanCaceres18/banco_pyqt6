@@ -1,7 +1,7 @@
 import conexion as con
 
 class HistorialData():
-    def buscarPorFecha(self, fechaDesde, fechaHasta, documento,tipo):
+    def buscarPorFecha(self, fechaDesde, fechaHasta, tipo,documento):
         # Devuelvo referencia a la base de datos
         self.db = con.Conexion().conectar()
         self.cursor = self.db.cursor()
